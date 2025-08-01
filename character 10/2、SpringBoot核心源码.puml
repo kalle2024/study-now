@@ -1,0 +1,6 @@
+@startuml
+participant DemoApplication as da
+participant SpringApplication as sa
+da --> sa : run(DemoApplication.class, args)
+sa --> sa : run(Class<?>[], args)
+@enduml

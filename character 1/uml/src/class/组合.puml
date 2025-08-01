@@ -1,0 +1,20 @@
+@startuml
+class Human {
+    + head: Head
+    + body: Body
+    + setHead(Head head): void
+    + setBody(Body body): void
+    + display(): void
+}
+
+class Head {
+    + name: String
+}
+
+class Body {
+    + name: String
+}
+
+Human *-- Head : 组合
+Human *-- Body : 组合
+@enduml

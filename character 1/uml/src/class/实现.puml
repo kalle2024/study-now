@@ -1,0 +1,18 @@
+@startuml
+interface Vehicle {
+    + run(): void
+}
+
+class Car {
+    + name: String
+    + run(): void
+}
+
+class Ship {
+    + name: String
+    + run(): void
+}
+
+Vehicle <|.. Car : 实现
+Vehicle <|.. Ship : 实现
+@enduml

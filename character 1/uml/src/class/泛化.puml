@@ -1,0 +1,9 @@
+@startuml
+class Car {
+    + name: String
+    + run(): void
+}
+
+Car <|-- Bus : 泛化
+Car <|-- Taxi : 泛化
+@enduml

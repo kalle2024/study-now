@@ -1,0 +1,58 @@
+@startmindmap
+* SpringBoot自动装配
+**[#f9423a] 0、SpringFramework
+***[#f9d5d5] 优势：ioc、di、aop、jdbc transaction
+***[#f9d5d5] 劣势：搭建SpringMVC麻烦、整合第三方依赖比较麻烦
+**[#f6a04d] 1、为什么要设计SpringBoot
+***[#fdecdb] SpringFramework环境搭建麻烦、整合第三方组件麻烦
+**[#f3d321] 2、SpringBoot做了哪些改善？
+***[#fdf6d3] 内置web容器，如tomcat、undertow
+***[#fdf6d3] 没有那么多复杂的配置，各种bean声明
+***[#fdf6d3] 例如：整合mybatis、redis、mq、xxxx等（约定优于配置）
+****[#fdf6d3] 1、引入依赖
+****[#fdf6d3] 2、写配置（可选）
+****[#fdf6d3] 3、写注解（可选）
+**[#00bc7b] 3、SpringBoot Version
+***[#ccf2e5] 2.x
+****[#ccf2e5] warmup时间损耗
+****[#ccf2e5] java源码 -> class文件 -> jvm加载 -> jit -> 机器码，消耗内存大
+***[#ccf2e5] 3.x
+****[#ccf2e5] spring native
+*****[#ccf2e5] 启动时间、内存消耗就会很少
+****[#ccf2e5] Graal VM
+****[#ccf2e5] 云原生（docker/k8s）
+**[#486aff] 4、如何做到自动装配的？
+***[#dae1ff] 父子pom依赖，在starter中将所需的依赖包一并引入进来
+***[#dae1ff] 不用SpringBoot自动装配时，需要显示通过@Configuration和@Bean声明Bean
+***[#dae1ff] 必须要有@SpringBootApplication，其中包含：
+****[#dae1ff] @SpringBootConfiguration ---> @Configuration
+****[#dae1ff] @EnableAutoConfiguration
+****[#dae1ff] @ComponentScan
+***[#f9d5d5] SpringBoot自动装配机制
+****[#dae1ff] 1、单个Bean的装配：@Configuration + @Bean
+****[#dae1ff] 2、批量Bean装配：@Configuration + @ComponentScan + @Component，\n默认扫描标注@SpringBootApplication类所在的包
+****[#f9d5d5] 3、第三方依赖的Bean装配
+*****[#d1eed1] 方式一：@Configuration + @Bean（操作繁琐）
+*****[#d1eed1] 方式二：@Configuration + @Import（同理，需要很多@Import）
+*****[#f9d5d5] 方式三
+******[#f9d5d5] @EnableAutoConfiguration
+******[#f9d5d5] @Import(AutoConfigurationImportSelector.class)
+******[#f9d5d5] AutoconfigurationImportSelector#getAutoConfigurationEntry寻找第三方依赖中的@Configuration配置类，\nSpringFactoriesLoader.loadFactoryNames => loadSpringFactories => /META-INF/spring.factories
+*******[#f9d5d5] /META-INF/spring.factories文件约定配置
+********[#f9d5d5] key：org.springframework.boot.autoconfigure.EnableAutoConfiguration
+********[#f9d5d5] value：实际需要配置的Configuration类，类名规则：**AutoConfiguration
+****[#f9d5d5] 4、@Conditional注解条件装配
+*****[#f9d5d5] 目的：当出现缺省bean或者缺省配置时，提供默认配置，或者默认逻辑
+*****[#f9d5d5] 包含注解
+******[#f9d5d5] @ConditionalOnClass
+******[#f9d5d5] @ConditionalOnMissingBean
+******[#f9d5d5] @ConditionalOnProperty
+******[#f9d5d5] ......
+****[#f9d5d5] 5、@ConfigurationProperties、yaml、properties文件的配置项与属性的绑定
+*****[#f9d5d5] 自定义starter，需要引入引来：autoconfigure、configuration-processor
+*****[#f9d5d5] @EnableConfigurationProperties(XXProperties.class)，\n交由ioc容器管理XXProperties的bean
+***[#f6a04d] 小结：SpringBoot自动装配的思路
+****[#f6a04d] SpringBoot自动寻找spring.factories的配置类
+****[#f6a04d] 条件装配
+****[#f6a04d] 属性的自动绑定
+@endmindmap

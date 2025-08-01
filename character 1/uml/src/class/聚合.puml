@@ -1,0 +1,12 @@
+@startuml
+class Hat {
+    + name: String
+}
+
+class Clothes {
+    + name: String
+}
+
+BusDriver o-- Hat : 聚合
+BusDriver o-- Clothes : 聚合
+@enduml

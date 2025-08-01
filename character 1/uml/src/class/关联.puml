@@ -1,0 +1,3 @@
+@startuml
+Driver "1" -- "1" Car : 关联
+@enduml
